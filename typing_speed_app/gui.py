@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from words_generator import generate_words
+from appbrain import AppBrain
 
 
 class AppWindow(tk.Tk):
@@ -10,6 +11,7 @@ class AppWindow(tk.Tk):
         self.title("Typing Speed Test")
         self.size = "800x400"
         self.resizable = (False, False)
+        self.configure(background="#EEF5FF")
 
     def __repr__(self) -> str:
         return f"Subclass {AppWindow} of {super().__repr__()}"
@@ -28,7 +30,7 @@ class MainFrame(ttk.Frame):
         self.generated_words = self.get_random_words()
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
-        self.bank_text_display.grid(row=0, column=0)
+        self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
         self.bank_text_display.insert(index="1.0", chars=self.generated_words)
         self.bank_text_display.configure(
             bg=self.BG_COLOR, font=self.FONT, foreground=self.FG_COLOR, padx=0, pady=40
@@ -50,8 +52,9 @@ class MainFrame(ttk.Frame):
         self.entry_placeholder = "Click here and start typing!"
         self.user_entry.configure(width=len(self.entry_placeholder) - 9)
         self.user_entry.insert(0, self.entry_placeholder)
-        self.user_entry.grid(row=1, column=0)
+        self.user_entry.grid(row=1, column=0, pady=(20, 10))
         self.user_entry.bind("<ButtonRelease-1>", self.game_init)
+        self.user_entry.bind("<KeyRelease>", self.evaluate_last_input)
 
     @staticmethod
     def get_random_words(n_words=WORDS_PER_ROUND) -> str:
@@ -63,6 +66,12 @@ class MainFrame(ttk.Frame):
 
     def game_init(self, event):
         self.delete_widget_text()
+
+    def evaluate_last_input(self, event):
+        return AppBrain(
+            computer_text=self.bank_text_display.get("1.0", "end"),
+            user_text=self.user_entry.get(),
+        ).is_last_char_same()
 
 
 # debug
