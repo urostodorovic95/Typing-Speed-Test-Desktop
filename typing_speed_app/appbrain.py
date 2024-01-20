@@ -3,14 +3,15 @@ class AppBrain:
         self.computer_text = computer_text
         self.user_text = user_text
         self.round_mistakes = 0
-        if self.user_text:
-            self._last_index = len(self.user_text) - 1
+        self._last_index = len(self.user_text) - 1
 
     @property
     def last_index(self):
         return self._last_index
 
     def is_last_char_same(self):
+        if len(self.user_text) == 0:
+            return False
         return self.computer_text[self._last_index] == self.user_text[-1]
 
     def is_round_over(self):

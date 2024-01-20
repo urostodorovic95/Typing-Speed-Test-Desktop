@@ -84,6 +84,8 @@ class MainFrame(ttk.Frame):
             self.uncorrected_round_mistakes.append(
                 self.evaluate_round_mistakes(evaluate_input)
             )
+            print(self.uncorrected_round_mistakes)
+            self.reset_round()
 
     def add_red_color(self, brain_object):
         self.bank_text_display.tag_add("red", f"1.{brain_object.last_index}")
@@ -93,6 +95,13 @@ class MainFrame(ttk.Frame):
 
     def evaluate_round_mistakes(self, brain_object):
         return brain_object.count_round_errors()
+
+    def reset_round(self):
+        self.bank_text_display.delete("1.0", "end")
+        self.generated_words = self.get_random_words()
+        self.bank_text_display.insert("1.0", self.generated_words)
+        self.bank_text_display.tag_add("center", "1.0", "end")
+        self.user_entry.delete(0, "end")
 
 
 # debug
