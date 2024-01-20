@@ -74,7 +74,10 @@ class MainFrame(ttk.Frame):
 
     def finish_test(self):
         # calculate score
-        # display score
+        # reset screen
+        # display score and stats
+        # ask for another round?
+        pass
 
     @staticmethod
     def discard_extra_text(user_text: str, compared_to: str) -> str:
