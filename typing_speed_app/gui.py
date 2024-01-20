@@ -29,6 +29,7 @@ class MainFrame(ttk.Frame):
 
         # self.generated_words = self.get_random_words()
         self.generated_words = "hello world"
+        self.uncorrected_round_mistakes = []
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
@@ -80,12 +81,18 @@ class MainFrame(ttk.Frame):
                 self.add_red_color(evaluate_input)
         else:
             print("round over")
+            self.uncorrected_round_mistakes.append(
+                self.evaluate_round_mistakes(evaluate_input)
+            )
 
     def add_red_color(self, brain_object):
         self.bank_text_display.tag_add("red", f"1.{brain_object.last_index}")
 
     def remove_red_color(self, brain_object):
         self.bank_text_display.tag_remove("red", f"1.{brain_object.last_index}")
+
+    def evaluate_round_mistakes(self, brain_object):
+        return brain_object.count_round_errors()
 
 
 # debug
