@@ -37,6 +37,8 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.configure(
             bg=self.BG_COLOR, font=self.FONT, foreground=self.FG_COLOR, padx=0, pady=40
         )
+        # make it read-only
+        self.bank_text_display.bind("<Key>", lambda event: "break")
         # tags
         self.bank_text_display.tag_configure("center", justify="center")
         self.bank_text_display.tag_configure(
