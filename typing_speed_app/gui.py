@@ -19,6 +19,8 @@ class MainFrame(ttk.Frame):
     WORDS_PER_ROUND = 6
     # Styling
     FONT = ("Helvetica", 30)
+    BG_COLOR = "#AAD7D9"
+    FG_COLOR = "#FBF9F1"
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -29,7 +31,7 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.grid(row=0, column=0)
         self.bank_text_display.insert(index="1.0", chars=self.generated_words)
         self.bank_text_display.configure(
-            bg="#AAD7D9", font=self.FONT, foreground="#FBF9F1", padx=0, pady=40
+            bg=self.BG_COLOR, font=self.FONT, foreground=self.FG_COLOR, padx=0, pady=40
         )
         # tags
         self.bank_text_display.tag_configure("center", justify="center")
@@ -40,9 +42,27 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.tag_add("center", "1.0", "end")
         self.bank_text_display.tag_add("red", "1.4")
 
+        # entry widget
+        self.user_entry = ttk.Entry(
+            master=parent, background=self.FG_COLOR, foreground=self.BG_COLOR
+        )
+        self.user_entry.focus()
+        self.entry_placeholder = "Click here and start typing!"
+        self.user_entry.configure(width=len(self.entry_placeholder) - 9)
+        self.user_entry.insert(0, self.entry_placeholder)
+        self.user_entry.grid(row=1, column=0)
+        self.user_entry.bind("<ButtonRelease-1>", self.game_init)
+
     @staticmethod
-    def get_random_words(words=WORDS_PER_ROUND):
-        return generate_words(words)
+    def get_random_words(n_words=WORDS_PER_ROUND) -> str:
+        return generate_words(n_words)
+
+    def delete_widget_text(self):
+        if self.user_entry.get() == self.entry_placeholder:
+            self.user_entry.delete(0, "end")
+
+    def game_init(self, event):
+        self.delete_widget_text()
 
 
 # debug
