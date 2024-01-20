@@ -42,7 +42,6 @@ class MainFrame(ttk.Frame):
         )  # When a mistake is made
 
         self.bank_text_display.tag_add("center", "1.0", "end")
-        self.bank_text_display.tag_add("red", "1.4")
 
         # entry widget
         self.user_entry = ttk.Entry(
@@ -76,9 +75,12 @@ class MainFrame(ttk.Frame):
             if evaluate_input.is_last_char_same():
                 print("true")
             else:
-                print("false")
+                self.add_red_color(evaluate_input)
         else:
             print("round over")
+
+    def add_red_color(self, brain_object):
+        self.bank_text_display.tag_add("red", f"1.{brain_object.last_index}")
 
 
 # debug
