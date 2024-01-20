@@ -138,18 +138,38 @@ class AppBrain:
     def count_round_errors(self) -> int:
         """
         Count the errors in the current round.
-        If round is not complete, but timer reached 0, evaluate existing input.
+        If the round is not complete, but the timer reached 0, evaluate existing input.
 
         Returns:
         - int: Number of errors.
         """
+        computer_words = self.computer_text.strip().split(" ")
+        user_words = self.user_text.strip().split(" ")
         errors = 0
-        if len(self.user_text) < len(self.computer_text):
-            for index, char in enumerate(self.computer_text[len(self.user_text) - 1]):
-                if char != self.computer_text.strip()[index]:
+
+        # find which widget has the least num of words
+        min_word_count = min(len(computer_words), len(user_words))
+
+        for word_index in range(min_word_count):
+            min_word_length = min(
+                len(user_words[word_index]), len(computer_words[word_index])
+            )
+
+            # compare their chars
+            for letter_index in range(min_word_length):
+                if (
+                    user_words[word_index][letter_index]
+                    != computer_words[word_index][letter_index]
+                ):
                     errors += 1
-        else:
-            for index, char in enumerate(self.user_text.strip()):
-                if char != self.computer_text.strip()[index]:
-                    errors += 1
+
+            # count any additional characters in the user's word as mistakes
+            errors += abs(len(user_words[word_index]) - len(computer_words[word_index]))
+
+        # handle case if user's input is longer
+        if len(user_words) > len(computer_words):
+            additional_words = user_words[len(computer_words) :]
+            for word in additional_words:
+                errors += len(word)
+
         return errors

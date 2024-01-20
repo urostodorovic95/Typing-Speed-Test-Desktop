@@ -200,5 +200,6 @@ class MainFrame(ttk.Frame):
             test_time=MainFrame.ROUNDS_DURATION_MS,
         )
 
-#TODO
-    #look into threading: there is lagging when user types quickly
+
+# TODO
+# look into threading: there is lagging when user types quickly
