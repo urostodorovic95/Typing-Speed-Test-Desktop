@@ -24,7 +24,7 @@ class AppWindow(tk.Tk):
 
 class MainFrame(ttk.Frame):
     WORDS_PER_ROUND = 6
-    ROUNDS_DURATION_MS = 60000
+    ROUNDS_DURATION_MS = 10000
     # Styling
     FONT = ("Helvetica", 40)
     BG_COLOR = "#AAD7D9"
@@ -138,10 +138,11 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.delete("1.0", "end")
         self.bank_text_display.tag_delete("red")
         message = (
-            f"Test is done! Your typing speed is {wps} WPS. Average errors: {errors}."
+            f"Test over! Your typing speed is {wps} WPS. Average errors: {errors}."
         )
         self.bank_text_display.insert("1.0", message)
         self.bank_text_display.tag_add("center", "1.0", "end")
+        self.bank_text_display.configure(font=("Helvetica", 30))
 
     @staticmethod
     def discard_extra_text(user_text: str, compared_to: str) -> str:
