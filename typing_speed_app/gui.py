@@ -27,7 +27,8 @@ class MainFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.generated_words = self.get_random_words()
+        # self.generated_words = self.get_random_words()
+        self.generated_words = "hello world"
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))

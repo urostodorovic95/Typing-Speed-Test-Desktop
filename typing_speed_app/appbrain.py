@@ -13,4 +13,4 @@ class AppBrain:
         return self.computer_text[self._last_index] == self.user_text[-1]
 
     def is_round_over(self):
-        return len(self.computer_text) == len(self.user_text.strip())
+        return len(self.computer_text.strip()) == len(self.user_text.strip())
