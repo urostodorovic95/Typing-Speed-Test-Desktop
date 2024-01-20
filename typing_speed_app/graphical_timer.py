@@ -15,14 +15,14 @@ class CountdownTimer:
         self.time_left -= 1
         self.label.config(text=f"Time left: {self.time_left} seconds")
 
-        # Update the progress bar
-        progress_value = ((self.total_time - self.time_left) / self.total_time) * 100
+        # update the progress bar from full to 0
+        progress_value = (self.time_left / self.total_time) * 100
         self.progress["value"] = progress_value
 
         # Check if time has run out
         if self.time_left <= 0:
             self.label.config(text="Time's up!")
-            self.progress["value"] = 100
+            self.progress["value"] = 0
         else:
             # Call the update_time_left function again after 1000 milliseconds
             self.parent.after(1000, self.update_time_left)

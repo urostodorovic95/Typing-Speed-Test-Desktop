@@ -73,8 +73,9 @@ class MainFrame(ttk.Frame):
             background="#E5E1DA", font=("Helvetica", 20, "italic"), foreground="#0F1035"
         )
         timer_progressbar = ttk.Progressbar(
-            parent, orient="horizontal", length=400, mode="determinate"
+            parent, orient="horizontal", length=400, mode="determinate", maximum=100
         )
+        timer_progressbar["value"] = 100
         self.timer = CountdownTimer(
             time_ms=MainFrame.ROUNDS_DURATION_MS,
             parent=parent,
