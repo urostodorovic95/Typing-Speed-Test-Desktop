@@ -36,7 +36,12 @@ class AppBrain:
 
     def count_round_errors(self) -> int:
         errors = 0
-        for index, char in enumerate(self.user_text.strip()):
-            if char != self.computer_text.strip()[index]:
-                errors += 1
+        if len(self.user_text) < len(self.computer_text):
+            for index, char in enumerate(self.computer_text[len(self.user_text) - 1]):
+                if char != self.computer_text.strip()[index]:
+                    errors += 1
+        else:
+            for index, char in enumerate(self.user_text.strip()):
+                if char != self.computer_text.strip()[index]:
+                    errors += 1
         return errors

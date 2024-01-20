@@ -35,6 +35,8 @@ class MainFrame(ttk.Frame):
         self.typed_chars = ""
         self.test_initialized_id = None
         self.test_initialized = False
+        self.computer_text = ""
+        self.user_text = ""
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
@@ -84,6 +86,13 @@ class MainFrame(ttk.Frame):
         self.test_initialized = False
         self.user_entry.delete(0, "end")
         self.user_entry.configure(state="disabled")
+        # properly handle mistakes if timer reaches 0
+        self.uncorrected_round_mistakes.append(
+            self.evaluate_round_mistakes(
+                AppBrain(computer_text=self.computer_text, user_text=self.user_text)
+            )
+        )
+        print(self.uncorrected_round_mistakes)
         # display score and stats
         wps, errors = self.process_score()
         self.bank_text_display.delete("1.0", "end")
@@ -106,9 +115,13 @@ class MainFrame(ttk.Frame):
         if typed_char == "space":
             typed_char = " "
         self.typed_chars = self.typed_chars + typed_char
-        computer_text = self.bank_text_display.get("1.0", "end")
-        user_text = self.discard_extra_text(self.user_entry.get(), computer_text)
-        evaluate_input = AppBrain(computer_text=computer_text, user_text=user_text)
+        self.computer_text = self.bank_text_display.get("1.0", "end")
+        self.user_text = self.discard_extra_text(
+            self.user_entry.get(), self.computer_text
+        )
+        evaluate_input = AppBrain(
+            computer_text=self.computer_text, user_text=self.user_text
+        )
 
         if not evaluate_input.is_round_over():
             if evaluate_input.is_last_char_same():
@@ -148,9 +161,6 @@ class MainFrame(ttk.Frame):
         )
 
 
-# TODO
-# handle special case to evaluate mistakes if timer stops the test
-# get user text, compare length to length of computer text, evaluate mistakes (should be in last func call)
 # debug
 app = AppWindow()
 MainFrame(parent=app)
