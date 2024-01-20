@@ -199,3 +199,6 @@ class MainFrame(ttk.Frame):
             errors=average_error_count,
             test_time=MainFrame.ROUNDS_DURATION_MS,
         )
+
+#TODO
+    #look into threading: there is lagging when user types quickly
