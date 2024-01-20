@@ -61,7 +61,9 @@ class MainFrame(ttk.Frame):
         )
         self.user_entry.focus()
         self.entry_placeholder = "Click here and start typing!"
-        self.user_entry.configure(width=len(self.entry_placeholder) - 9)
+        self.user_entry.configure(
+            width=len(self.entry_placeholder) - 9, font="Helvetica, 30"
+        )
         self.user_entry.insert(0, self.entry_placeholder)
         self.user_entry.grid(row=1, column=0, pady=(20, 10))
         self.user_entry.bind("<ButtonRelease-1>", self.game_init)
@@ -72,8 +74,22 @@ class MainFrame(ttk.Frame):
         timer_label.configure(
             background="#E5E1DA", font=("Helvetica", 20, "italic"), foreground="#0F1035"
         )
+        self.progress_style = ttk.Style()
+        self.progress_style.theme_use("clam")
+        self.progress_style.configure(
+            "red.Horizontal.TProgressbar",
+            thickness=50,
+            foreground="#B4D4FF",
+            background="#365486",
+        )
+
         timer_progressbar = ttk.Progressbar(
-            parent, orient="horizontal", length=400, mode="determinate", maximum=100
+            parent,
+            orient="horizontal",
+            length=400,
+            mode="determinate",
+            maximum=100,
+            style="red.Horizontal.TProgressbar",
         )
         timer_progressbar["value"] = 100
         self.timer = CountdownTimer(
@@ -83,7 +99,7 @@ class MainFrame(ttk.Frame):
             progressbar=timer_progressbar,
         )
         self.timer.label.grid(row=2, column=0, pady=10)
-        self.timer.progress.grid(row=3, column=0, pady=(0, 5))
+        self.timer.progress.grid(row=3, column=0, pady=(5, 10))
 
     @staticmethod
     def get_random_words(n_words=WORDS_PER_ROUND) -> str:
