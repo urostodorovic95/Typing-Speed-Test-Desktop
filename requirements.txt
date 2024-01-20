@@ -1,0 +1,2 @@
+# Custom files
+typing_speed_app/words_bank.txt
