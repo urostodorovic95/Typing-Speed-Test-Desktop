@@ -10,9 +10,13 @@ class AppWindow(tk.Tk):
         super().__init__()
 
         self.title("Typing Speed Test")
-        self.size = "800x400"
+        self.geometry("1000x600")
         self.resizable = (False, False)
         self.configure(background="#EEF5FF")
+        self.rowconfigure(0, weight=5)
+        self.rowconfigure(1, weight=2)
+        self.rowconfigure(2, weight=1)
+        self.columnconfigure(0, weight=1)
 
     def __repr__(self) -> str:
         return f"Subclass {AppWindow} of {super().__repr__()}"
@@ -20,7 +24,7 @@ class AppWindow(tk.Tk):
 
 class MainFrame(ttk.Frame):
     WORDS_PER_ROUND = 6
-    ROUNDS_DURATION_MS = 10000
+    ROUNDS_DURATION_MS = 60000
     # Styling
     FONT = ("Helvetica", 40)
     BG_COLOR = "#AAD7D9"
