@@ -70,10 +70,18 @@ class MainFrame(ttk.Frame):
     def game_init(self, event):
         self.delete_widget_text()
 
+    @staticmethod
+    def discard_extra_text(user_text: str, compared_to: str) -> str:
+        if user_text:
+            if len(user_text) > len(compared_to):
+                return user_text[: len(compared_to) - 1]
+        return user_text
+
     def evaluate_last_input(self, event):
+        computer_text = self.bank_text_display.get("1.0", "end")
         evaluate_input = AppBrain(
-            computer_text=self.bank_text_display.get("1.0", "end"),
-            user_text=self.user_entry.get(),
+            computer_text=computer_text,
+            user_text=self.discard_extra_text(self.user_entry.get(), computer_text),
         )
         if not evaluate_input.is_round_over():
             if evaluate_input.is_last_char_same():
