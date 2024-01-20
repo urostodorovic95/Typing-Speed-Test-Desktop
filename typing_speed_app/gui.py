@@ -31,8 +31,14 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.configure(
             bg="#AAD7D9", font=self.FONT, foreground="#FBF9F1", padx=0, pady=40
         )
+        # tags
         self.bank_text_display.tag_configure("center", justify="center")
+        self.bank_text_display.tag_configure(
+            "red", foreground="#ED5AB3"
+        )  # When a mistake is made
+
         self.bank_text_display.tag_add("center", "1.0", "end")
+        self.bank_text_display.tag_add("red", "1.4")
 
     @staticmethod
     def get_random_words(words=WORDS_PER_ROUND):
