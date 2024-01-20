@@ -80,19 +80,19 @@ class MainFrame(ttk.Frame):
             )
 
     def finish_test(self):
-        # calculate score
-        # reset screen
         self.after_cancel(self.test_initialized_id)
         self.test_initialized = False
         self.user_entry.delete(0, "end")
-        self.user_entry.configure(
-            state="disabled", background=MainFrame.RED_COLOR_STYLED
-        )
+        self.user_entry.configure(state="disabled")
         # display score and stats
-        # ask for another round?
-        print("all typed chars", self.typed_chars)
         wps, errors = self.process_score()
-        print("wps, errors:", wps, errors)
+        self.bank_text_display.delete("1.0", "end")
+        self.bank_text_display.tag_delete("red")
+        message = (
+            f"Test is done! Your typing speed is {wps} WPS. Average errors: {errors}."
+        )
+        self.bank_text_display.insert("1.0", message)
+        self.bank_text_display.tag_add("center", "1.0", "end")
 
     @staticmethod
     def discard_extra_text(user_text: str, compared_to: str) -> str:
@@ -148,6 +148,9 @@ class MainFrame(ttk.Frame):
         )
 
 
+# TODO
+# handle special case to evaluate mistakes if timer stops the test
+# get user text, compare length to length of computer text, evaluate mistakes (should be in last func call)
 # debug
 app = AppWindow()
 MainFrame(parent=app)
