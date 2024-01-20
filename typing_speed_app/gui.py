@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from words_generator import generate_words
-from appbrain import AppBrain
-from graphical_timer import CountdownTimer
+from .words_generator import generate_words
+from .appbrain import AppBrain
+from .graphical_timer import CountdownTimer
 
 
 class AppWindow(tk.Tk):
@@ -200,9 +200,3 @@ class MainFrame(ttk.Frame):
             errors=average_error_count,
             test_time=MainFrame.ROUNDS_DURATION_MS,
         )
-
-
-# debug
-app = AppWindow()
-MainFrame(parent=app)
-app.mainloop()
