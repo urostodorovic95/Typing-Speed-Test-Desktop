@@ -75,6 +75,7 @@ class MainFrame(ttk.Frame):
         if not evaluate_input.is_round_over():
             if evaluate_input.is_last_char_same():
                 print("true")
+                self.remove_red_color(evaluate_input)
             else:
                 self.add_red_color(evaluate_input)
         else:
@@ -82,6 +83,9 @@ class MainFrame(ttk.Frame):
 
     def add_red_color(self, brain_object):
         self.bank_text_display.tag_add("red", f"1.{brain_object.last_index}")
+
+    def remove_red_color(self, brain_object):
+        self.bank_text_display.tag_remove("red", f"1.{brain_object.last_index}")
 
 
 # debug
