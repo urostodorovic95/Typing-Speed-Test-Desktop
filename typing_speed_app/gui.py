@@ -20,7 +20,7 @@ class AppWindow(tk.Tk):
 class MainFrame(ttk.Frame):
     WORDS_PER_ROUND = 6
     # Styling
-    FONT = ("Helvetica", 30)
+    FONT = ("Helvetica", 40)
     BG_COLOR = "#AAD7D9"
     FG_COLOR = "#FBF9F1"
 
@@ -79,10 +79,9 @@ class MainFrame(ttk.Frame):
 
     def evaluate_last_input(self, event):
         computer_text = self.bank_text_display.get("1.0", "end")
-        evaluate_input = AppBrain(
-            computer_text=computer_text,
-            user_text=self.discard_extra_text(self.user_entry.get(), computer_text),
-        )
+        user_text = self.discard_extra_text(self.user_entry.get(), computer_text)
+        evaluate_input = AppBrain(computer_text=computer_text, user_text=user_text)
+
         if not evaluate_input.is_round_over():
             if evaluate_input.is_last_char_same():
                 print("true")
@@ -95,6 +94,8 @@ class MainFrame(ttk.Frame):
                 self.evaluate_round_mistakes(evaluate_input)
             )
             print(self.uncorrected_round_mistakes)
+            print(computer_text)
+            print(user_text)
             self.reset_round()
 
     def add_red_color(self, brain_object):
