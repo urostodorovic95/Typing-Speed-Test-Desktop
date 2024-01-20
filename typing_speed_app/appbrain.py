@@ -6,8 +6,11 @@ class AppBrain:
         self._last_index = len(self.user_text) - 1
 
     @staticmethod
-    def calculate_score(total_chars: int, errors: int, test_time: int = 1):
-        return int((total_chars / 5 - errors) / test_time)
+    def calculate_score(total_chars: int, errors: int, test_time: int = 60000):
+        return (
+            int((total_chars / 5 - errors) / ((test_time / 1000) / 60)),
+            int(errors),
+        )
 
     @property
     def last_index(self):

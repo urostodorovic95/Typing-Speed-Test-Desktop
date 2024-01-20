@@ -31,6 +31,7 @@ class MainFrame(ttk.Frame):
         # self.generated_words = self.get_random_words()
         self.generated_words = "hello world"
         self.uncorrected_round_mistakes = []
+        self.typed_chars = ""
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
@@ -77,7 +78,9 @@ class MainFrame(ttk.Frame):
         # reset screen
         # display score and stats
         # ask for another round?
-        pass
+        print("all typed chars", self.typed_chars)
+        wps, errors = self.process_score()
+        print("wps, errors:", wps, errors)
 
     @staticmethod
     def discard_extra_text(user_text: str, compared_to: str) -> str:
@@ -87,24 +90,23 @@ class MainFrame(ttk.Frame):
         return user_text
 
     def evaluate_last_input(self, event):
+        typed_char = event.keysym
+        if typed_char == "space":
+            typed_char = " "
+        self.typed_chars = self.typed_chars + typed_char
         computer_text = self.bank_text_display.get("1.0", "end")
         user_text = self.discard_extra_text(self.user_entry.get(), computer_text)
         evaluate_input = AppBrain(computer_text=computer_text, user_text=user_text)
 
         if not evaluate_input.is_round_over():
             if evaluate_input.is_last_char_same():
-                print("true")
                 self.remove_red_color(evaluate_input)
             else:
                 self.add_red_color(evaluate_input)
         else:
-            print("round over")
             self.uncorrected_round_mistakes.append(
                 self.evaluate_round_mistakes(evaluate_input)
             )
-            print(self.uncorrected_round_mistakes)
-            print(computer_text)
-            print(user_text)
             self.reset_round()
 
     def add_red_color(self, brain_object):
@@ -122,6 +124,16 @@ class MainFrame(ttk.Frame):
         self.bank_text_display.insert("1.0", self.generated_words)
         self.bank_text_display.tag_add("center", "1.0", "end")
         self.user_entry.delete(0, "end")
+
+    def process_score(self):
+        average_error_count = sum(self.uncorrected_round_mistakes) / len(
+            self.uncorrected_round_mistakes
+        )
+        return AppBrain.calculate_score(
+            total_chars=len(self.typed_chars),
+            errors=average_error_count,
+            test_time=MainFrame.ROUNDS_DURATION_MS,
+        )
 
 
 # debug
