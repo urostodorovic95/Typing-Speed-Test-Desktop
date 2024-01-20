@@ -16,16 +16,23 @@ class AppWindow(tk.Tk):
 
 
 class MainFrame(ttk.Frame):
-    WORDS_PER_ROUND = 5
+    WORDS_PER_ROUND = 6
+    # Styling
+    FONT = ("Helvetica", 30)
 
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.bank_text_display = tk.Text(
-            master=parent, wrap="word", width=50, height=10
-        )
+        self.generated_words = self.get_random_words()
+
+        self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0)
-        self.bank_text_display.insert(index="1.0", chars=self.get_random_words())
+        self.bank_text_display.insert(index="1.0", chars=self.generated_words)
+        self.bank_text_display.configure(
+            bg="#AAD7D9", font=self.FONT, foreground="#FBF9F1", padx=0, pady=40
+        )
+        self.bank_text_display.tag_configure("center", justify="center")
+        self.bank_text_display.tag_add("center", "1.0", "end")
 
     @staticmethod
     def get_random_words(words=WORDS_PER_ROUND):
