@@ -19,6 +19,7 @@ class AppWindow(tk.Tk):
 
 class MainFrame(ttk.Frame):
     WORDS_PER_ROUND = 6
+    ROUNDS_DURATION_MS = 10000
     # Styling
     FONT = ("Helvetica", 40)
     BG_COLOR = "#AAD7D9"
@@ -69,6 +70,11 @@ class MainFrame(ttk.Frame):
 
     def game_init(self, event):
         self.delete_widget_text()
+        self.after(MainFrame.ROUNDS_DURATION_MS, self.finish_test)
+
+    def finish_test(self):
+        # calculate score
+        # display score
 
     @staticmethod
     def discard_extra_text(user_text: str, compared_to: str) -> str:
