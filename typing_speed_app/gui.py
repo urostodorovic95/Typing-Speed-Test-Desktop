@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from words_generator import generate_words
 from appbrain import AppBrain
+from graphical_timer import CountdownTimer
 
 
 class AppWindow(tk.Tk):
@@ -66,6 +67,23 @@ class MainFrame(ttk.Frame):
         self.user_entry.bind("<ButtonRelease-1>", self.game_init)
         self.user_entry.bind("<KeyRelease>", self.evaluate_last_input)
 
+        # countdown timer
+        timer_label = tk.Label(parent, text="Time left:")
+        timer_label.configure(
+            background="#E5E1DA", font=("Helvetica", 20, "italic"), foreground="#0F1035"
+        )
+        timer_progressbar = ttk.Progressbar(
+            parent, orient="horizontal", length=400, mode="determinate"
+        )
+        self.timer = CountdownTimer(
+            time_ms=MainFrame.ROUNDS_DURATION_MS,
+            parent=parent,
+            label=timer_label,
+            progressbar=timer_progressbar,
+        )
+        self.timer.label.grid(row=2, column=0, pady=10)
+        self.timer.progress.grid(row=3, column=0, pady=(0, 5))
+
     @staticmethod
     def get_random_words(n_words=WORDS_PER_ROUND) -> str:
         return generate_words(n_words)
@@ -75,6 +93,7 @@ class MainFrame(ttk.Frame):
             self.user_entry.delete(0, "end")
 
     def game_init(self, event):
+        self.timer.init_timer()
         if not self.test_initialized:
             self.delete_widget_text()
             self.test_initialized_id = self.after(
@@ -83,7 +102,7 @@ class MainFrame(ttk.Frame):
 
     def finish_test(self):
         self.after_cancel(self.test_initialized_id)
-        self.test_initialized = False
+        self.test_initialized = True
         self.user_entry.delete(0, "end")
         self.user_entry.configure(state="disabled")
         # properly handle mistakes if timer reaches 0
