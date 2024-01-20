@@ -68,10 +68,17 @@ class MainFrame(ttk.Frame):
         self.delete_widget_text()
 
     def evaluate_last_input(self, event):
-        return AppBrain(
+        evaluate_input = AppBrain(
             computer_text=self.bank_text_display.get("1.0", "end"),
             user_text=self.user_entry.get(),
-        ).is_last_char_same()
+        )
+        if not evaluate_input.is_round_over():
+            if evaluate_input.is_last_char_same():
+                print("true")
+            else:
+                print("false")
+        else:
+            print("round over")
 
 
 # debug
