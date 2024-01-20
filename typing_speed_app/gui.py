@@ -24,6 +24,7 @@ class MainFrame(ttk.Frame):
     FONT = ("Helvetica", 40)
     BG_COLOR = "#AAD7D9"
     FG_COLOR = "#FBF9F1"
+    RED_COLOR_STYLED = "#ED5AB3"
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -32,6 +33,8 @@ class MainFrame(ttk.Frame):
         self.generated_words = "hello world"
         self.uncorrected_round_mistakes = []
         self.typed_chars = ""
+        self.test_initialized_id = None
+        self.test_initialized = False
 
         self.bank_text_display = tk.Text(master=parent, wrap="none", width=50, height=1)
         self.bank_text_display.grid(row=0, column=0, padx=(5, 5), pady=(10, 10))
@@ -44,7 +47,7 @@ class MainFrame(ttk.Frame):
         # tags
         self.bank_text_display.tag_configure("center", justify="center")
         self.bank_text_display.tag_configure(
-            "red", foreground="#ED5AB3"
+            "red", foreground=MainFrame.RED_COLOR_STYLED
         )  # When a mistake is made
 
         self.bank_text_display.tag_add("center", "1.0", "end")
@@ -70,12 +73,21 @@ class MainFrame(ttk.Frame):
             self.user_entry.delete(0, "end")
 
     def game_init(self, event):
-        self.delete_widget_text()
-        self.after(MainFrame.ROUNDS_DURATION_MS, self.finish_test)
+        if not self.test_initialized:
+            self.delete_widget_text()
+            self.test_initialized_id = self.after(
+                MainFrame.ROUNDS_DURATION_MS, self.finish_test
+            )
 
     def finish_test(self):
         # calculate score
         # reset screen
+        self.after_cancel(self.test_initialized_id)
+        self.test_initialized = False
+        self.user_entry.delete(0, "end")
+        self.user_entry.configure(
+            state="disabled", background=MainFrame.RED_COLOR_STYLED
+        )
         # display score and stats
         # ask for another round?
         print("all typed chars", self.typed_chars)
