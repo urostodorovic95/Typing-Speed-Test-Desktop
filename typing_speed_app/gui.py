@@ -34,8 +34,7 @@ class MainFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # self.generated_words = self.get_random_words()
-        self.generated_words = "hello world"
+        self.generated_words = self.get_random_words()
         self.uncorrected_round_mistakes = []
         self.typed_chars = ""
         self.test_initialized_id = None
