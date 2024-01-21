@@ -23,10 +23,10 @@ class AppWindow(tk.Tk):
 
 
 class MainFrame(ttk.Frame):
-    WORDS_PER_ROUND = 6
+    WORDS_PER_ROUND = 5
     ROUNDS_DURATION_MS = 60000
     # Styling
-    FONT = ("Helvetica", 40)
+    FONT = ("Helvetica", 35)
     BG_COLOR = "#AAD7D9"
     FG_COLOR = "#FBF9F1"
     RED_COLOR_STYLED = "#ED5AB3"
