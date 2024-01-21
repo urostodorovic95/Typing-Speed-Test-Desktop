@@ -133,11 +133,11 @@ class MainFrame(ttk.Frame):
         )
         print(self.uncorrected_round_mistakes)
         # display score and stats
-        wps, errors = self.process_score()
+        wpm, errors = self.process_score()
         self.bank_text_display.delete("1.0", "end")
         self.bank_text_display.tag_delete("red")
         message = (
-            f"Test over! Your typing speed is {wps} WPS. Average errors: {errors}."
+            f"Test over! Your typing speed is {wpm} WPM. Average errors: {errors}."
         )
         self.bank_text_display.insert("1.0", message)
         self.bank_text_display.tag_add("center", "1.0", "end")
