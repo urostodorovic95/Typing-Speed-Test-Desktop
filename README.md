@@ -5,8 +5,15 @@ _Built on tkinter and pillow python libs. Text file containing the word bank is 
 
 **Usage**
 1. ```git clone``` the repo:
-  - HTTPS: ```git clone https://github.com/urostodorovic95/Typing-Speed-Test-Desktop.git```
-  - SSH: ```git clone git@github.com:urostodorovic95/Typing-Speed-Test-Desktop.git```
+
+  _HTTPS:_
+```
+git clone https://github.com/urostodorovic95/Typing-Speed-Test-Desktop.git
+```
+  _SSH:_ 
+```
+git clone git@github.com:urostodorovic95/Typing-Speed-Test-Desktop.git
+```
 2. run the run.py file
 3. When you click to start typing, a 60 second timer starts automatically.
 4. Mistakes are highlighted in red (use backspace key to delete the mistakes).
