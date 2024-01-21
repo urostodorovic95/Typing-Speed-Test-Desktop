@@ -156,9 +156,8 @@ class MainFrame(ttk.Frame):
             typed_char = " "
         self.typed_chars = self.typed_chars + typed_char
         self.computer_text = self.bank_text_display.get("1.0", "end")
-        self.user_text = self.discard_extra_text(
-            self.user_entry.get(), self.computer_text
-        )
+        self.user_text = self.user_entry.get()
+
         evaluate_input = AppBrain(
             computer_text=self.computer_text, user_text=self.user_text
         )
