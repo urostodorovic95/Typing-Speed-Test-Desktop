@@ -108,6 +108,8 @@ class AppBrain:
         Returns:
         - bool: True if the round is over, False otherwise.
         """
+        if len(self.user_text.strip()) > len(self.computer_text.strip()):
+            return True
         return len(self.computer_text.strip()) == len(self.user_text.strip())
 
     @property
